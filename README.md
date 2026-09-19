@@ -1,40 +1,41 @@
+markdown
 # DeepSeek Flash Vision Demo
-
 这是一个基于 Python 的示例项目，演示了如何使用 OpenAI SDK 调用 DeepSeek 的多模态模型（如 `deepseek-flash`）进行图片内容识别和分析。
 
 ## 📝 项目简介
-
 本项目展示了如何通过 DeepSeek API 实现图像理解功能。代码通过读取本地图片文件，将其转换为 Base64 编码，并发送给 DeepSeek 模型进行解析，最后输出模型对图片内容的描述。简单来说，它的核心逻辑是：读取本地图片 -> 转码 -> 发送给 AI -> 获取文字描述。
 
 ## 🛠️ 环境准备
-
 在运行代码之前，请确保你已经安装了必要的依赖库，并配置了环境变量。
 
 1. 安装依赖
 在命令行（终端）中执行：
 ```bash
 pip install openai python-dotenv
-
 2. 导入库与环境配置
 os, pathlib：用于处理文件路径和系统环境变量。
 base64：用于将图片文件编码成字符串，因为 API 通常不能直接读取本地文件。
 dotenv：用于从 .env 文件中加载密钥（这是一种安全做法，避免将 API Key 硬编码在代码中）。
 OpenAI：这里复用了 OpenAI 的官方 SDK。因为 DeepSeek 的 API 接口兼容 OpenAI 格式，所以可以直接用这个库来调用 DeepSeek。
+
 代码片段：
+python
 import os
 import base64
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
-
 3. 初始化客户端
 加载配置：代码尝试从脚本同级目录下的 .env 文件中读取环境变量。
 建立连接：
+
 api_key：从环境变量中获取 DeepSeek 的密钥。
 base_url：指定 API 的入口地址。如果环境变量没设置，默认使用 https://api.deepseek.com。
+
 python
 env_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path=env_path, override=True)
+
 client = OpenAI(
     api_key=os.getenv("DEEPSEEK_API_KEY"),
     base_url=os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
