@@ -12,7 +12,7 @@ client = OpenAI(
     base_url=os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 )
 
-with open("香水.png", "rb") as f:
+with open("test.png", "rb") as f:
     base64_image = base64.b64encode(f.read()).decode("utf-8")
 response = client.chat.completions.create(
     model="deepseek-flash",
