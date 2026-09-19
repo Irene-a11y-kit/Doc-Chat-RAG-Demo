@@ -43,7 +43,7 @@ client = OpenAI(
 读取: 以二进制只读模式 (rb) 打开名为 香水.png 的图片。
 编码: 使用 base64 算法将二进制图片数据转换为文本字符串。
 解码: .decode("utf-8") 将字节对象转换为标准的 Python 字符串，以便后续拼接到 JSON 数据中：
-```with open("香水.png", "rb") as f:
+```with open("text.png", "rb") as f:
     base64_image = base64.b64encode(f.read()).decode("utf-8")```
 
 ### 5. 发送请求
