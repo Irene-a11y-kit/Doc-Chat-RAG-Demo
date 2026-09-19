@@ -1,18 +1,18 @@
-# DeepSeek Flash Vision Demo
-这是一个基于 Python 的示例项目，演示了如何使用 OpenAI SDK 调用 DeepSeek 的多模态模型（如 `deepseek-flash`）进行图片内容识别和分析。
+DeepSeek Flash Vision Demo
+这是一个基于 Python 的示例项目，演示了如何使用 OpenAI SDK 调用 DeepSeek 的多模态模型（如 deepseek-flash）进行图片内容识别和分析。
 
-## 📝 项目简介
+📝 项目简介
 本项目展示了如何通过 DeepSeek API 实现图像理解功能。代码通过读取本地图片文件，将其转换为 Base64 编码，并发送给 DeepSeek 模型进行解析，最后输出模型对图片内容的描述。
 简单来说，它的核心逻辑是：读取本地图片 -> 转码 -> 发送给 AI -> 获取文字描述。
 
-## 🛠️ 环境准备
+🛠️ 环境准备
 在运行代码之前，请确保你已经安装了必要的依赖库，并配置了环境变量。
 
-### 1. 安装依赖
+1. 安装依赖
 在命令行（终端）中执行：
 pip install openai python-dotenv
 
-2. 导入库与环境配置
+3. 导入库与环境配置
 os, pathlib：用于处理文件路径和系统环境变量。
 base64：用于将图片文件编码成字符串，因为 API 通常不能直接读取本地文件。
 dotenv：用于从 .env 文件中加载密钥（这是一种安全做法，避免将 API Key 硬编码在代码中）。
@@ -43,18 +43,15 @@ client = OpenAI(
 读取：以二进制只读模式（rb）打开名为 test.png 的图片。
 编码：使用 base64 算法将二进制图片数据转换为文本字符串。
 解码：.decode("utf-8") 将字节对象转换为标准的 Python 字符串，以便后续拼接到 JSON 数据中。
-
-python
 with open("test.png", "rb") as f:
     base64_image = base64.b64encode(f.read()).decode("utf-8")
-
-5. 发送请求
+   
+6. 发送请求
 模型：deepseek-flash
 消息结构：这里使用了多模态输入格式。content 是一个列表，包含两部分：
 文本部分：用户的问题，如“这张图片里有什么？”。
 图片部分：使用 data:image/png;base64,... 这种 Data URL 格式，直接传递刚才编码好的图片字符串。
-python
-response = client.chat.completions.create(
+"""response = client.chat.completions.create(
     model="deepseek-flash",
     messages=[
         {
@@ -78,5 +75,6 @@ print(response.choices[0].message.content)
 安装依赖：pip install openai python-dotenv
 运行脚本：python "DeepSeek Flash Vision Demo.py"
 准备文件：确保代码同级目录下有一张名为 test.png 的图片。
+
 
 
