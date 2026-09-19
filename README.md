@@ -40,10 +40,10 @@ client = OpenAI(
 )```
 
 ### 4. 图片处理（核心步骤）
-读取: 以二进制只读模式 (rb) 打开名为 香水.png 的图片。
+读取: 以二进制只读模式 (rb) 打开名为 test.png 的图片。
 编码: 使用 base64 算法将二进制图片数据转换为文本字符串。
 解码: .decode("utf-8") 将字节对象转换为标准的 Python 字符串，以便后续拼接到 JSON 数据中：
-```with open("text.png", "rb") as f:
+```with open("test.png", "rb") as f:
     base64_image = base64.b64encode(f.read()).decode("utf-8")```
 
 ### 5. 发送请求
@@ -68,7 +68,10 @@ client = OpenAI(
 从 API 返回的复杂 JSON 对象中，提取出第一个选择（choices[0]）中的消息内容（即 AI 对图片的描述），并打印到控制台：
 ```print(response.choices[0].message.content)```
 
-### 7. 运行前检查
-```安装依赖: pip install openai python-dotenv
-准备文件: 确保代码同级目录下有一张名为 香水.png 的图片。
-配置密钥: 创建 .env 文件，并写入 DEEPSEEK_API_KEY=你的密钥```
+###如何运行
+1. 克隆本项目到本地
+2. 复制 `.env.example` 为 `.env`，并填入你的 API Key
+3. 安装依赖：`pip install openai python-dotenv`
+4. 运行脚本：`python "DeepSeek Flash Vision Demo.py"`
+准备文件: 确保代码同级目录下有一张和test.png的图片。
+
