@@ -73,5 +73,5 @@ client = OpenAI(
 2. 复制 `.env.example` 为 `.env`，并填入你的 API Key
 3. 安装依赖：`pip install openai python-dotenv`
 4. 运行脚本：`python "DeepSeek Flash Vision Demo.py"`
-准备文件: 确保代码同级目录下有一张和test.png的图片。
+5.准备文件: 确保代码同级目录下有一张和test.png的图片。
 
