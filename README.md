@@ -12,7 +12,6 @@
 在命令行（终端）中执行：
 pip install openai python-dotenv
 
-markdown
 2. 导入库与环境配置
 os, pathlib：用于处理文件路径和系统环境变量。
 base64：用于将图片文件编码成字符串，因为 API 通常不能直接读取本地文件。
