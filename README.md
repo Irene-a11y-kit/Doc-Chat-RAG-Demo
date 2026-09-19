@@ -1,18 +1,23 @@
-DeepSeek Flash Vision Demo
-这是一个基于 Python 的示例项目，演示了如何使用 OpenAI SDK 调用 DeepSeek 的多模态模型（如 deepseek-flash）进行图片内容识别和分析。
+markdown
+# DeepSeek Flash Vision Demo
 
-📝 项目简介
+这是一个基于 Python 的示例项目，演示了如何使用 OpenAI SDK 调用 DeepSeek 的多模态模型（如 `deepseek-flash`）进行图片内容识别和分析。
+
+## 📝 项目简介
+
 本项目展示了如何通过 DeepSeek API 实现图像理解功能。代码通过读取本地图片文件，将其转换为 Base64 编码，并发送给 DeepSeek 模型进行解析，最后输出模型对图片内容的描述。
 
 简单来说，它的核心逻辑是：读取本地图片 -> 转码 -> 发送给 AI -> 获取文字描述。
 
-🛠️ 环境准备
+## 🛠️ 环境准备
+
 在运行代码之前，请确保你已经安装了必要的依赖库，并配置了环境变量。
 
-1. 安装依赖
+### 1. 安装依赖
+
 在命令行（终端）中执行：
 
-bash
+```bash
 pip install openai python-dotenv
 2. 导入库与环境配置
 os, pathlib：用于处理文件路径和系统环境变量。
