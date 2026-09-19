@@ -8,31 +8,28 @@ markdown
 ## 🛠️ 环境准备
 在运行代码之前，请确保你已经安装了必要的依赖库，并配置了环境变量。
 
-1. 安装依赖
-在命令行（终端）中执行：
+### 安装依赖
+1.在命令行（终端）中执行：
 ```bash
 pip install openai python-dotenv
+
 2. 导入库与环境配置
 os, pathlib：用于处理文件路径和系统环境变量。
 base64：用于将图片文件编码成字符串，因为 API 通常不能直接读取本地文件。
 dotenv：用于从 .env 文件中加载密钥（这是一种安全做法，避免将 API Key 硬编码在代码中）。
 OpenAI：这里复用了 OpenAI 的官方 SDK。因为 DeepSeek 的 API 接口兼容 OpenAI 格式，所以可以直接用这个库来调用 DeepSeek。
-
 代码片段：
-python
 import os
 import base64
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
+
 3. 初始化客户端
 加载配置：代码尝试从脚本同级目录下的 .env 文件中读取环境变量。
 建立连接：
-
 api_key：从环境变量中获取 DeepSeek 的密钥。
 base_url：指定 API 的入口地址。如果环境变量没设置，默认使用 https://api.deepseek.com。
-
-python
 env_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path=env_path, override=True)
 
@@ -45,8 +42,6 @@ client = OpenAI(
 读取：以二进制只读模式（rb）打开名为 test.png 的图片。
 编码：使用 base64 算法将二进制图片数据转换为文本字符串。
 解码：.decode("utf-8") 将字节对象转换为标准的 Python 字符串，以便后续拼接到 JSON 数据中。
-
-python
 with open("test.png", "rb") as f:
     base64_image = base64.b64encode(f.read()).decode("utf-8")
 
@@ -55,8 +50,6 @@ with open("test.png", "rb") as f:
 消息结构：这里使用了多模态输入格式。content 是一个列表，包含两部分：
 文本部分：用户的问题，如“这张图片里有什么？”。
 图片部分：使用 data:image/png;base64,... 这种 Data URL 格式，直接传递刚才编码好的图片字符串。
-
-python
 response = client.chat.completions.create(
     model="deepseek-flash",
     messages=[
@@ -72,7 +65,6 @@ response = client.chat.completions.create(
 
 6. 输出结果
 从 API 返回的复杂 JSON 对象中，提取出第一个选择（choices[0]）中的消息内容（即 AI 对图片的描述），并打印到控制台：
-python
 print(response.choices[0].message.content)
 
 🚀 如何运行
