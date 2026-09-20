@@ -93,4 +93,4 @@ print(response.choices[0].message.content)
 2.  **配置密钥**：复制 `.env.example` 为 `.env`，并填入你的 API Key
 3.  **安装依赖**：`pip install openai python-dotenv`
 4.  **准备文件**：确保代码同级目录下有一张名为 `test.png` 的图片。
-5.  **运行脚本**：`python "DeepSeek Flash Vision Demo.py"`
+5.  **运行脚本**：`Demo1_Flash_Vision.py"`
