@@ -1,0 +1,29 @@
+# ===== 环境变量（绝对不能上传）=====
+.env
+.env.local
+.env.*.local
+
+# ===== 虚拟环境 =====
+rag_env/
+venv/
+env/
+.conda/
+
+# ===== Python 缓存 =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# ===== 项目特有：体积大、不该上传 =====
+models/
+vector_db/
+*.faiss
+*.index
