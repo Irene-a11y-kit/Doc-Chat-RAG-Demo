@@ -21,12 +21,16 @@
 1. 点击上述表格跳转到你感兴趣的 Demo。
 2. 阅读该子项目下的独立 `README.md` 获取环境配置与运行指南。
 
+### 效果预览
+**Demo3_Doc_Chat_RAG**：基于淘宝规则 PDF 的问答（前三轮答对 + 第四轮不编造）
+![Demo3 效果](Demo3_Doc_Chat_RAG/demo.png)
+
 ## 技术栈概览
 
-- **大模型 (LLM)**: DeepSeek Chat / Flash
+- **大模型 (LLM)**: DeepSeek Flash
 - **编排框架**: LangChain (LCEL)
-- **向量数据库**: FAISS (本地向量检索)
-- **Embedding**: HuggingFace `bge-small-zh-v1.5`
+- **向量数据库**: FAISS（Demo3）/ Chroma（Demo2）
+- **Embedding**: HuggingFace `bge-small-zh-v1.5`（Demo3）
 - **开发语言**: Python 3.11+
 
 ---
