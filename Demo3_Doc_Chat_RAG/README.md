@@ -70,14 +70,10 @@
    最终回答 (Answer)
 
 **现象**：新建 `rag_env` 后装包，比旧环境快很多。
-
 **原因**：pip 会把下载过的 `.whl` 缓存在本地（`pip cache dir` 可查看），新环境下装同一个包时直接复用缓存，无需重新下载。
-
 **启发**：缓存是工程效率的关键，企业级系统里 CDN、Docker 层缓存、模型缓存都是同一逻辑。
 
 ## 项目结构
-
-```text
 .
 |-- main.py            # 主程序入口
 |-- .env               # 环境变量（API Key，不上传）
@@ -105,32 +101,37 @@
 
 ## 快速开始
 0. 克隆项目
-'''git clone https://github.com/Irene-a11y-kit/Doc-Chat-RAG-Demo.git
-cd Doc-Chat-RAG-Demo'''
+```
+git clone https://github.com/Irene-a11y-kit/Doc-Chat-RAG-Demo.git
+cd Doc-Chat-RAG-Demo```
 
 1. 创建虚拟环境
-'''conda create -n rag_env python=3.11 -y
-conda activate rag_env'''
+```
+conda create -n rag_env python=3.11 -y
+conda activate rag_env
+```
 
 2. 安装依赖
-'''pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'''
+```pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple```
 *torch 需 ≥ 2.6.0，否则会因 torch.load 安全漏洞被 transformers 拦截。
 
 3. 配置环境变量
 复制 .env.example 为 .env，填入你的 DeepSeek API Key：
-'''DEEPSEEK_API_KEY=sk-你的API_KEY_在这里
-DEEPSEEK_BASE_URL=https://api.deepseek.com'''
+```
+DEEPSEEK_API_KEY=sk-你的API_KEY_在这里
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+```
 
 4. 准备素材
 把要问答的 PDF 放到项目根目录，命名为 sample.pdf。
 首次运行会自动下载向量模型到 models/，并生成向量库到 vector_db/，之后运行会直接复用。
 
 5. 运行
-'''python main.py'''
+```python_main.py```
 
 ## 代码解析
 1. 导入库与环境配置
-'''
+```
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -143,7 +144,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-'''
+```
 pathlib：BASE_DIR = Path(__file__).resolve().parent 基于脚本位置定位，保证项目在任何电脑、任意工作目录下都能正确找到模型和向量库，这是「可移植」的关键。
 dotenv：从 .env 加载 API Key，避免密钥硬编码，是安全最佳实践。
 PyPDFLoader：把 PDF 解析为带页码元数据的文档对象。
@@ -154,7 +155,7 @@ ChatOpenAI：复用 OpenAI SDK 协议调用 DeepSeek（接口高度兼容），�
 LCEL 组件：RunnablePassthrough / ChatPromptTemplate / StrOutputParser，把「检索 → 填充 Prompt → 调用模型 → 解析输出」串成一条流水线。
 
 2. 模型与向量化（自动下载）
-'''os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")'''
+```os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")```
 
 3. PDF 解析与文本切分
 load_pdf() 做了防御性校验（文件是否存在、后缀是否为 .pdf）；split_documents() 针对中文优化了分隔符（。！？，），chunk_size=500、chunk_overlap=50 在召回精度与上下文完整性之间取得平衡。
@@ -195,19 +196,19 @@ format_docs() 在拼接检索片段时附带来源文件名与页码，方便回
 3. torch < 2.6 安全限制
 现象：加载模型时报 ValueError: Due to a serious vulnerability issue in torch.load...。
 原因：torch < 2.6 存在 torch.load 安全漏洞，新版 transformers 要求升级。
-'''pip install "torch>=2.6.0" --index-url https://download.pytorch.org/whl/cpu'''
+```pip install "torch>=2.6.0" --index-url https://download.pytorch.org/whl/cpu```
 
 4. LangChain 1.x 路径变动
 现象：ModuleNotFoundError: No module named 'langchain.text_splitter'。
 原因：LangChain 1.x 把组件拆到独立包，路径变了。
-'''
+```
 # 旧
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 # 新
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-'''
+```
 
 5. 模型文件夹结构不对导致重复下载
 现象：本地已有模型文件，但代码仍尝试联网下载，触发 SSL 报错。
