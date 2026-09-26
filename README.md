@@ -23,7 +23,7 @@
 
 ### 效果预览
 **Demo3_Doc_Chat_RAG**：基于淘宝规则 PDF 的问答（前三轮答对 + 第四轮不编造）
-![Demo3 效果](Demo3_Doc_Chat_RAG/demo.png)
+![Demo3 效果](Demo3_Doc_Chat_RAG/demo.jpg)
 
 ## 技术栈概览
 
